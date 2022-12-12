@@ -1,0 +1,41 @@
+\documentclass[12pt]{amsart}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{a4paper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{inputenc}
+\usepackage{centernot}
+%SetFonts
+\usepackage{amsmath}
+\newcommand{\me}{
+    \author{Abhay Shankar K : cs21btech11001}
+\maketitle
+}
+
+\begin{document}
+    \title{Lab8 : Report}
+    \me
+
+    Program flow:
+    \begin{itemize}
+        \item Program reads from default input file (for ease of debugging) input.txt.
+        \item numpy.loadtxt() converts the 0x-prefixed hexadecimal strings in the file
+         to integers, storres them in a list s[].
+        \item One pass through s generates another list ops, which contain only the opcodes of all instructions.
+        \item Using a dict, these opcodes are matched to their respective handlers in a key-value pair.
+        \item Each handler extracts the various fields of the instruction, and uses more dicts to determine the exact instruction being executed (based on funct3 and funct7).
+        \item For the shift instructions, some references indicate another field named funct6, to differentiate berween arithmetic and logical shifts. This is not treated as a separate field and extracted later.
+        \item For each line of machine code, the required handler returns a string containing the corresponding assembly. This gets stored in a list, temp.
+        \item One pass through the assembly code allows us to look for branches and insert labels. The naming convention is L\{n\} for the n'th encountered branch/jump. The labelled code is stored in out[].
+        \item The contents of out are printed to the terminal (for ease of debugging) as well as the default output file, output.txt.
+    \end{itemize}
+
+    Testing:
+    \begin{itemize}
+        \item The code was tested using three assembly programs provided for Lab7 : Caches. 
+        \item Testing of signed correctness required some modifications to the given programs, and input.txt still contains those modifications.
+    \end{itemize}
+\end{document}
